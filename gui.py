@@ -14,7 +14,12 @@ def windowDesign():
 
 def api_call(email):
     root = ctk.CTk()
-    windowDesign()
+    root.title("Enigma Breach Checker")
+    root.iconbitmap("images/favicon-16x16.ico")
+    root.geometry("480x480")
+    root.eval("tk::PlaceWindow . center")
+    root.resizable(False, False)
+    ctk.set_default_color_theme("blue")
     url = "https://api.xposedornot.com/v1/check-email/{0}".format(email)
     print(url)
     response = rq.get(url)
@@ -27,13 +32,13 @@ def api_call(email):
     num_breaches = len(data)
     num_lines = 3  
     window_height = 400 + 100 * num_breaches 
-    root.geometry(f"480x{window_height}")
+    root.geometry(f"640x{window_height}")
     root.eval("tk::PlaceWindow . center")
-    message = f"Your data has been found in: \n"
+    message = f"{email} has been found in: \n"
     if error:
         message = "No breaches found."
         message_label = ctk.CTkLabel(root, text=message, font=("Inter", 40, "bold"))
-        message_label.place (x=110,y=20)
+        message_label.place (x=10,y=20)
     elif data:
         for breach in data:
             for element in breach[:20:]:
